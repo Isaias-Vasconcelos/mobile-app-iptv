@@ -12,13 +12,13 @@ class LoginButtonWidget extends StatelessWidget {
         buttonChild: TextButton(
             onPressed: onPressed,
             style: const ButtonStyle(
-                fixedSize: WidgetStatePropertyAll(Size(173, 50))),
+                fixedSize: WidgetStatePropertyAll(Size(260, 50))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Icon(Icons.login),
                 const SizedBox(
-                  width: 28,
+                  width: 60,
                 ),
                 Text(
                   "LOGIN",
