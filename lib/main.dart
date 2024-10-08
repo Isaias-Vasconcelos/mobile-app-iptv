@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/my_app.dart';
+import 'package:iptv_mobile/app.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Root());
 }

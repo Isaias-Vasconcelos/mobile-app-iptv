@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iptv_mobile/screens/Colors/app_colors.dart';
-import 'package:iptv_mobile/screens/login_widgets/components_widgets/login_button_widget.dart';
+import 'package:iptv_mobile/style/app_colors.dart';
+import 'package:iptv_mobile/components/login/login_button_widget.dart';
 
-class IntroductionScreenWidget extends StatelessWidget {
-  const IntroductionScreenWidget({super.key});
+class IntroductionScreen extends StatelessWidget {
+  const IntroductionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class IntroductionScreenWidget extends StatelessWidget {
             const SizedBox(
               height: 100,
             ),
-            Image.asset("Assets/ImageAssets/Tv.png"),
+            Image.asset('assets/images/Tv.png'),
             const SizedBox(
               height: 100,
             ),
