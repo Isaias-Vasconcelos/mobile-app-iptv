@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/screens/login_screen.dart';
+import 'package:iptv_mobile/screens/introduction_screen_widget.dart';
+import 'package:iptv_mobile/screens/login_widgets/login_screen_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: "/",
-      routes: {"/": (context) => const LoginScreen()},
+      routes: {
+        "/": (context) => const IntroductionScreenWidget(),
+        "/login": (context) => const LoginScreenWidget()
+      },
     );
   }
 }
