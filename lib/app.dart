@@ -16,7 +16,7 @@ class Root extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         useMaterial3: true,
       ),
-      initialRoute: "/",
+      initialRoute: "/login",
       routes: {
         "/": (context) => const IntroductionScreen(),
         "/login": (context) => const LoginScreen()

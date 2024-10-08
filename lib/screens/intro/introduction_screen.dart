@@ -39,13 +39,18 @@ class IntroductionScreen extends StatelessWidget {
                     textStyle: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w600))),
             const SizedBox(
-              height: 100,
+              height: 110,
             ),
             Image.asset('assets/images/Tv.png'),
             const SizedBox(
-              height: 100,
+              height: 110,
             ),
-            LoginButtonWidget(onPressed: () {})
+            LoginButtonWidget(onPressed:
+             () => Navigator.of(context).pushReplacementNamed("/login")  
+            ),
+            const SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),
