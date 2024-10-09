@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iptv_mobile/screens/home/home_screen.dart';
 import 'package:iptv_mobile/screens/intro/introduction_screen.dart';
 import 'package:iptv_mobile/screens/login/login_screen.dart';
 
@@ -16,10 +17,11 @@ class Root extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         useMaterial3: true,
       ),
-      initialRoute: "/",
+      initialRoute: "/home",
       routes: {
         "/": (context) => const IntroductionScreen(),
-        "/login": (context) => const LoginScreen()
+        "/login": (context) => const LoginScreen(),
+        "/home": (context) => const HomeScreen()
       },
     );
   }

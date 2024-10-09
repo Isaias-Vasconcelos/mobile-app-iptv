@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Implementar factory
 class TextFormFieldDecoration {
   final Icon prefixIcon;
   late InputDecoration decoration;

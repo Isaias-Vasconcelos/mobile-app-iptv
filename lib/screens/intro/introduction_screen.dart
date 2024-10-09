@@ -39,32 +39,15 @@ class IntroductionScreen extends StatelessWidget {
                     textStyle: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w600))),
             const SizedBox(
-              height: 100,
+              height: 110,
             ),
             Image.asset('assets/images/Tv.png'),
             const SizedBox(
               height: 110,
             ),
-            ButtonGradientContainer(
-                buttonChild: TextButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushReplacementNamed("/login"),
-                    style: const ButtonStyle(
-                        fixedSize: WidgetStatePropertyAll(Size(173, 50))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.login),
-                        const SizedBox(
-                          width: 28,
-                        ),
-                        Text(
-                          "LOGIN",
-                          style: GoogleFonts.jost(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ))),
+            LoginButtonWidget(
+                onPressed: () =>
+                    Navigator.of(context).pushReplacementNamed("/login")),
             const SizedBox(
               height: 50,
             ),

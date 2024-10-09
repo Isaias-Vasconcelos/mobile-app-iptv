@@ -41,6 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         backgroundColor: Colors.green,
       ));
+      Navigator.of(context).pushReplacementNamed("/home");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
@@ -55,81 +56,80 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/Tv.png"),
-                Text(
-                  "INSIRA SUA CONTA",
-                  style: GoogleFonts.jost(
-                      textStyle: const TextStyle(fontSize: 27)),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                //Compentizar os InputDecorations
-                //Componentizar os TextStyles
-                Form(
-                    key: _formKey,
-                    child: SizedBox(
-                      width: 240,
-                      child: Column(
-                        children: [
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Código de usuário",
-                                style: TextAboveInputStyle().textStyle,
-                              )),
-                          TextFormField(
-                            validator: (value) => _userCodeValidator(value),
-                            keyboardType: TextInputType.number,
-                            maxLength: 8,
-                            decoration: TextFormFieldDecoration(
-                                prefixIcon: const Icon(
-                              Icons.person_outline,
-                              color: Colors.white,
-                            )).decoration,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Align(
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/images/Tv.png"),
+              Text(
+                "INSIRA SUA CONTA",
+                style:
+                    GoogleFonts.jost(textStyle: const TextStyle(fontSize: 27)),
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Form(
+                  key: _formKey,
+                  child: SizedBox(
+                    width: 240,
+                    child: Column(
+                      children: [
+                        Align(
                             alignment: Alignment.centerLeft,
-                            child: Text("Senha",
-                                style: TextAboveInputStyle().textStyle),
-                          ),
-                          TextFormField(
-                            validator: (value) => _passwordValidator(value),
-                            keyboardType: TextInputType.number,
-                            obscureText: true,
-                            maxLength: 8,
-                            decoration: TextFormFieldDecoration(
-                                prefixIcon: const Icon(
-                              Icons.lock_outline,
-                              color: Colors.white,
-                            )).decoration,
-                          ),
-                          const SizedBox(
-                            height: 68,
-                          ),
-                          LoginButtonWidget(onPressed: () {
-                            _login();
-                          }),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
-                    ))
-              ],
-            ),
+                            child: Text(
+                              "Código de usuário",
+                              style: TextAboveInputStyle().textStyle,
+                            )),
+                        TextFormField(
+                          validator: (value) => _userCodeValidator(value),
+                          keyboardType: TextInputType.number,
+                          maxLength: 8,
+                          decoration: TextFormFieldDecoration(
+                              prefixIcon: const Icon(
+                            Icons.person_outline,
+                            color: Colors.white,
+                          )).decoration,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Senha",
+                              style: TextAboveInputStyle().textStyle),
+                        ),
+                        TextFormField(
+                          validator: (value) => _passwordValidator(value),
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          maxLength: 8,
+                          decoration: TextFormFieldDecoration(
+                              prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: Colors.white,
+                          )).decoration,
+                        ),
+                        const SizedBox(
+                          height: 68,
+                        ),
+                        LoginButtonWidget(onPressed: () {
+                          _login();
+                        }),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                      ],
+                    ),
+                  ))
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
