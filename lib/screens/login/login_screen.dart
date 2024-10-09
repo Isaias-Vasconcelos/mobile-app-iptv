@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv_mobile/components/login/login_button_widget.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
+import 'package:iptv_mobile/style/login/decorations/text_form_field_decoration.dart';
+import 'package:iptv_mobile/style/login/text_above_input_style.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -55,149 +57,79 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/Tv.png"),
-                Text(
-                  "INSIRA SUA CONTA",
-                  style: GoogleFonts.jost(
-                      textStyle: const TextStyle(fontSize: 27)),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Form(
-                    key: _formKey,
-                    child: SizedBox(
-                      width: 240,
-                      child: Column(
-                        children: [
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Código de usuário",
-                                style: TextAboveInputStyle().textStyle,
-                              )),
-                          TextFormField(
-                            validator: (value) => _userCodeValidator(value),
-                            keyboardType: TextInputType.number,
-                            maxLength: 8,
-                            decoration: TextFormFieldDecoration(
-                                prefixIcon: const Icon(
-                              Icons.person_outline,
-                              color: Colors.white,
-                            )).decoration,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Senha",
-                                style: TextAboveInputStyle().textStyle),
-                          ),
-                          TextFormField(
-                            validator: (value) => _passwordValidator(value),
-                            keyboardType: TextInputType.number,
-                            obscureText: true,
-                            maxLength: 8,
-                            decoration: TextFormFieldDecoration(
-                                prefixIcon: const Icon(
-                              Icons.lock_outline,
-                              color: Colors.white,
-                            )).decoration,
-                          ),
-                          const SizedBox(
-                            height: 68,
-                          ),
-                          LoginButtonWidget(onPressed: () {
-                            _login();
-                          }),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
-                    ))
-              ],
-            ),
-            //Compentizar os InputDecorations
-            //Componentizar os TextStyles
-            Form(
-              key: _formKey,
-              child: SizedBox(
-                width: 240,
-                child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child:Text(
-                    "Código de usuário",
-                    style: GoogleFonts.jost(
-                      textStyle: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700
-                      )
-                    ),)
-                  ),
-                  
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors().mainPurple,
-                      prefixIcon: const Icon(
-                        Icons.person_outline_outlined,
-                        color: Colors.white,
-                        ),
-                      border: const UnderlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(6)))
-                      ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                    "Senha",
-                     style: GoogleFonts.jost(
-                      textStyle: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700
-                      )
-                    )),
-                  ),
-                 
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: AppColors().mainPurple,
-                      prefixIcon: const Icon(
-                        Icons.lock_outline,
-                        color: Colors.white,
-                        ),
-                      border: const UnderlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(6)))
-                      ),
-                    ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  LoginButtonWidget(onPressed: (){})
-
-                ],
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/images/Tv.png"),
+              Text(
+                "INSIRA SUA CONTA",
+                style:
+                    GoogleFonts.jost(textStyle: const TextStyle(fontSize: 27)),
               ),
-            ))
-          ],
-        ) ,
+              const SizedBox(
+                height: 60,
+              ),
+              Form(
+                  key: _formKey,
+                  child: SizedBox(
+                    width: 240,
+                    child: Column(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Código de usuário",
+                              style: TextAboveInputStyle().textStyle,
+                            )),
+                        TextFormField(
+                          validator: (value) => _userCodeValidator(value),
+                          keyboardType: TextInputType.number,
+                          maxLength: 8,
+                          decoration: TextFormFieldDecoration(
+                              prefixIcon: const Icon(
+                            Icons.person_outline,
+                            color: Colors.white,
+                          )).decoration,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Senha",
+                              style: TextAboveInputStyle().textStyle),
+                        ),
+                        TextFormField(
+                          validator: (value) => _passwordValidator(value),
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          maxLength: 8,
+                          decoration: TextFormFieldDecoration(
+                              prefixIcon: const Icon(
+                            Icons.lock_outline,
+                            color: Colors.white,
+                          )).decoration,
+                        ),
+                        const SizedBox(
+                          height: 68,
+                        ),
+                        LoginButtonWidget(onPressed: () {
+                          _login();
+                        }),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                      ],
+                    ),
+                  ))
+            ],
+          ),
+        ),
       ),
     );
   }
