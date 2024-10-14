@@ -17,8 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: DefaultTabController(
+    return DefaultTabController(
       length: 3,
       animationDuration: Durations.medium2,
       child: Scaffold(
@@ -70,20 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ]),
           ),
           drawer: const AppDrawerWidget(),
-          body: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: TabBarView(children: [
-                    MoviesHomeScreen(),
-                    SeriesHomeScreen(),
-                    ChannelsHomeScreen()
-                  ])),
-            ),
-          )),
-    ));
+          body: const TabBarView(children: [
+            MoviesHomeScreen(),
+            SeriesHomeScreen(),
+            ChannelsHomeScreen()
+          ])),
+    );
   }
 }

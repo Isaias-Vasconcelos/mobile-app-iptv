@@ -15,33 +15,38 @@ class _ChannelsHomeScreenState extends State<ChannelsHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
-        child: Text(
-          "CATEGORIAS DE CANAIS",
-          textAlign: TextAlign.center,
-          style: GoogleFonts.jost(
-              textStyle: const TextStyle(
-                  fontSize: 33,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white)),
-        ),
-      ),
-      Flexible(
-        child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 17,
-              mainAxisSpacing: 20,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: CustomScrollView(slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                "CATEGORIAS DE CANAIS",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.jost(
+                    textStyle: const TextStyle(
+                        fontSize: 33,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white)),
+              ),
             ),
-            itemCount: mockGendersList.length,
-            itemBuilder: (context, index) {
-              return ContentCardWidget(text: mockGendersList[index].name);
-            }),
+          ),
+          SliverGrid.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 27,
+                  crossAxisSpacing: 18,
+                  mainAxisExtent: 150),
+              itemCount: mockGendersList.length,
+              itemBuilder: (context, index) {
+                return ContentCardWidget(text: mockGendersList[index].name);
+              })
+        ]),
       ),
-    ]);
+    );
   }
 }
