@@ -39,6 +39,7 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
             ),
             itemCount: mockGendersList.length,
             itemBuilder: (context, index) {
+              //Implementar GestureDetect para tela de listagem de filmes
               return ContentCardWidget(text: mockGendersList[index].name);
             }),
       ),
