@@ -43,7 +43,12 @@ class _SeriesHomeScreenState extends State<SeriesHomeScreen> {
                   mainAxisExtent: 150),
               itemCount: mockGendersList.length,
               itemBuilder: (context, index) {
-                return ContentCardWidget(text: mockGendersList[index].name);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed("/list-series");
+                  },
+                  child: ContentCardWidget(text: mockGendersList[index].name),
+                );
               })
         ]),
       ),

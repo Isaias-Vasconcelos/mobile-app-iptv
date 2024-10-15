@@ -3,20 +3,20 @@ import 'package:iptv_mobile/components/app_drawer_widget.dart';
 import 'package:iptv_mobile/components/app_title_widget.dart';
 import 'package:iptv_mobile/components/back_button_widget.dart';
 import 'package:iptv_mobile/components/list_content/input_text_list_content_widget.dart';
-import 'package:iptv_mobile/components/list_content/movies/movies_list_card_widget.dart';
+import 'package:iptv_mobile/components/list_content/series/series_list_card_widget.dart';
 import 'package:iptv_mobile/components/list_content/title_list_content_widget.dart';
-import 'package:iptv_mobile/mocks/movies/movies_mock.dart';
+import 'package:iptv_mobile/mocks/series/series_mock.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 
-class ListMoviesScreen extends StatefulWidget {
-  const ListMoviesScreen({super.key});
+class ListSeriesScreen extends StatefulWidget {
+  const ListSeriesScreen({super.key});
 
   @override
-  State<ListMoviesScreen> createState() => _ListMoviesScreenState();
+  State<ListSeriesScreen> createState() => _ListSeriesScreenState();
 }
 
-class _ListMoviesScreenState extends State<ListMoviesScreen> {
-  final mockMoviesList = MoviesMock().mockMoviesList;
+class _ListSeriesScreenState extends State<ListSeriesScreen> {
+  final mockSeriesList = SeriesMock().mockSeriesList;
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +53,14 @@ class _ListMoviesScreenState extends State<ListMoviesScreen> {
                       crossAxisSpacing: 30,
                       mainAxisSpacing: 20,
                       mainAxisExtent: 245),
-                  itemCount: mockMoviesList.length,
+                  itemCount: mockSeriesList.length,
                   itemBuilder: (context, index) {
                     //Implementar GestureDetector para detalhes do conteudo
-                    return MoviesListCardWidget(
-                      moviePhotoUrl: mockMoviesList[index].photoUrl,
-                      movieTitle: mockMoviesList[index].title,
-                      genderName: mockMoviesList[index].genders[0].name,
+                    return SeriesListCardWidget(
+                      seriesPhotoUrl: mockSeriesList[index].photoUrl,
+                      seriesTitle: mockSeriesList[index].title,
+                      genderName: mockSeriesList[index].genders[0].name,
+                      seasonAmount: mockSeriesList[index].seasons.length,
                     );
                   }),
             ])),
