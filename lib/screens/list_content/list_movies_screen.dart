@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iptv_mobile/components/app_drawer_widget.dart';
 import 'package:iptv_mobile/components/app_title_widget.dart';
-import 'package:iptv_mobile/components/back_button_widget.dart';
+import 'package:iptv_mobile/components/back_button_sliver_widget.dart';
 import 'package:iptv_mobile/components/list_content/input_text_list_content_widget.dart';
 import 'package:iptv_mobile/components/list_content/movies/movies_list_card_widget.dart';
 import 'package:iptv_mobile/components/list_content/title_list_content_widget.dart';
 import 'package:iptv_mobile/mocks/movies/movies_mock.dart';
+import 'package:iptv_mobile/screens/details/movies/movies_details_screen.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 
 class ListMoviesScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _ListMoviesScreenState extends State<ListMoviesScreen> {
         child: Padding(
             padding: const EdgeInsets.all(10),
             child: CustomScrollView(slivers: [
-              BackButtonWidget(onPressed: () {
+              BackButtonSliverWidget(onPressed: () {
                 Navigator.of(context).pushReplacementNamed("/home");
               }),
               const TitleListContentWidget(title: "AÇÃO"),
@@ -55,11 +56,25 @@ class _ListMoviesScreenState extends State<ListMoviesScreen> {
                       mainAxisExtent: 245),
                   itemCount: mockMoviesList.length,
                   itemBuilder: (context, index) {
-                    //Implementar GestureDetector para detalhes do conteudo
-                    return MoviesListCardWidget(
-                      moviePhotoUrl: mockMoviesList[index].photoUrl,
-                      movieTitle: mockMoviesList[index].title,
-                      genderName: mockMoviesList[index].genders[0].name,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MoviesDetailsScreen(
+                                    moviePhotoUrl: mockMoviesList[index].photoUrl,
+                                    movieTitle: mockMoviesList[index].title,
+                                    year: mockMoviesList[index].year,
+                                    platformName: mockMoviesList[index].platform.name,
+                                    genderName: mockMoviesList[index].genders[0].name,
+                                    movieDescription: mockMoviesList[index].description,
+                                    movieUrl: mockMoviesList[index].movieUrl)));
+                      },
+                      child: MoviesListCardWidget(
+                        moviePhotoUrl: mockMoviesList[index].photoUrl,
+                        movieTitle: mockMoviesList[index].title,
+                        genderName: mockMoviesList[index].genders[0].name,
+                      ),
                     );
                   }),
             ])),

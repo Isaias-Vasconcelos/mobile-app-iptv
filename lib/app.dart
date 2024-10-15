@@ -20,15 +20,13 @@ class Root extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         useMaterial3: true,
       ),
-      initialRoute: "/details-movies",
+      initialRoute: "/list-movies",
       routes: {
         "/": (context) => const IntroductionScreen(),
         "/login": (context) => const LoginScreen(),
         "/home": (context) => const HomeScreen(),
         "/list-movies": (context) => const ListMoviesScreen(),
         "/list-series": (context) => const ListSeriesScreen(),
-        //Temporário, apenas para visualização da Interface
-        "/details-movies": (context) => MoviesDetailsScreen()
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iptv_mobile/components/app_drawer_widget.dart';
 import 'package:iptv_mobile/components/app_title_widget.dart';
-import 'package:iptv_mobile/components/back_button_widget.dart';
+import 'package:iptv_mobile/components/back_button_sliver_widget.dart';
 import 'package:iptv_mobile/components/list_content/input_text_list_content_widget.dart';
 import 'package:iptv_mobile/components/list_content/series/series_list_card_widget.dart';
 import 'package:iptv_mobile/components/list_content/title_list_content_widget.dart';
@@ -42,7 +42,7 @@ class _ListSeriesScreenState extends State<ListSeriesScreen> {
         child: Padding(
             padding: const EdgeInsets.all(10),
             child: CustomScrollView(slivers: [
-              BackButtonWidget(onPressed: () {
+              BackButtonSliverWidget(onPressed: () {
                 Navigator.of(context).pushReplacementNamed("/home");
               }),
               const TitleListContentWidget(title: "AÇÃO"),
