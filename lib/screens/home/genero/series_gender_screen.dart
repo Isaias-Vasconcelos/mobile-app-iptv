@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/components/home/content_card_widget.dart';
-import 'package:iptv_mobile/controllers/movie_controller.dart';
+import 'package:iptv_mobile/models/gender_model.dart';
 import 'package:provider/provider.dart';
-import '../../components/back_button_sliver_widget.dart';
-import '../../components/list_content/input_text_list_content_widget.dart';
-import '../../components/list_content/movies/movies_list_card_widget.dart';
-import '../../mocks/movies/movies_mock.dart';
-import '../../models/movies_model.dart';
-import '../../style/app_colors.dart';
-import '../details/movies/movies_details_screen.dart';
 
-class MoviesHomeScreen extends StatefulWidget {
-  const MoviesHomeScreen({super.key});
+import '../../../components/list_content/movies/movies_list_card_widget.dart';
+import '../../../controllers/movie_controller.dart';
+import '../../../style/app_colors.dart';
+
+class SeriesGenderScreen extends StatefulWidget {
+  Gender gender;
+
+  SeriesGenderScreen({super.key, required this.gender});
 
   @override
-  State<StatefulWidget> createState() => _MoviesHomeScreenState();
+  State<SeriesGenderScreen> createState() => _SeriesGenderScreenState();
 }
 
-class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
-  final mockMoviesList = MoviesMock().mockMoviesList;
-
+class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
   @override
   void initState() {
     super.initState();
@@ -27,13 +23,6 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
     final movieController =
         Provider.of<MovieController>(context, listen: false);
     movieController.loadMovies();
-  }
-
-  void verDetalhesFilme(Movies movie){
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MoviesDetailsScreen(movies: movie,)));
   }
 
   @override
@@ -50,7 +39,7 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.search),
-              hintText: 'Digite o nome do filme',
+              hintText: 'Digite o nome da série',
               border: OutlineInputBorder(),
             ),
           ),
@@ -76,9 +65,6 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
                   itemCount: controller.movies.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () {
-                        verDetalhesFilme(controller.movies[index]);
-                      },
                       child: MoviesListCardWidget(
                         movies: controller.movies[index],
                       ),

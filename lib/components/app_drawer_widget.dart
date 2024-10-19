@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iptv_mobile/screens/home/genero/gender_home_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../controllers/gender_controller.dart';
+import '../models/gender_model.dart';
+import '../style/app_colors.dart';
 
 class AppDrawerWidget extends StatefulWidget {
   const AppDrawerWidget({super.key});
@@ -14,88 +20,56 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
   final Color textAndIconsColor = Colors.white;
 
   @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      width: 260,
-      backgroundColor: Colors.black,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          SizedBox(
-            height: 100,
-            child: DrawerHeader(
-                decoration: const BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.white))),
-                child: Text(
-                  "Olá, João Freire",
-                  style: GoogleFonts.jost(
-                      textStyle: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.w600,
-                          color: textAndIconsColor)),
-                )),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.person_outline,
-              size: 30,
-              color: textAndIconsColor,
-            ),
-            title: Text(
-              "Minha conta",
-              style: GoogleFonts.jost(
-                  textStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: textAndIconsColor)),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              size: 30,
-              color: textAndIconsColor,
-            ),
-            title: Text(
-              "Sair da conta",
-              style: GoogleFonts.jost(
-                  textStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: textAndIconsColor)),
-            ),
-          ),
-          const SizedBox(
-            height: 35,
-            child: DrawerHeader(
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.white))),
-                child: Text("")),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Text(
-              "Feedback",
-              style: TextStyle(color: Color.fromARGB(144, 255, 255, 255)),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.emoji_flags_sharp,
-              size: 31,
-              color: textAndIconsColor,
-            ),
-            title: Text(
-              "Relate um problema",
-              style: GoogleFonts.jost(
-                  textStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: textAndIconsColor)),
-            ),
-          ),
-        ],
+  void initState() {
+    super.initState();
+
+    final genderController =
+        Provider.of<GenderController>(context, listen: false);
+    genderController.getAllGenders();
+  }
+
+  void redirecionarPagina(Gender gender) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => GenderHomeScreen(
+          gender: gender,
+        ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = AppColors();
+
+    return Drawer(
+        width: 260,
+        child: Consumer<GenderController>(
+          builder: (context, controller, child) {
+            if (controller.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  titleTextStyle:
+                      const TextStyle(color: Colors.white, fontSize: 17),
+                  leading: Icon(
+                    Icons.play_circle_outline_sharp,
+                    color: colors.mainPurple,
+                  ),
+                  title: Text(controller.genders[index].name),
+                  onTap: () {
+                    redirecionarPagina(controller.genders[index]);
+                  },
+                );
+              },
+              itemCount: controller.genders.length,
+            );
+          },
+        ));
   }
 }

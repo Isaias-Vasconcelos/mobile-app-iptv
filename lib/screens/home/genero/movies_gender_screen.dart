@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/components/home/content_card_widget.dart';
-import 'package:iptv_mobile/controllers/movie_controller.dart';
+import 'package:iptv_mobile/models/gender_model.dart';
+import 'package:iptv_mobile/models/movies_model.dart';
 import 'package:provider/provider.dart';
-import '../../components/back_button_sliver_widget.dart';
-import '../../components/list_content/input_text_list_content_widget.dart';
-import '../../components/list_content/movies/movies_list_card_widget.dart';
-import '../../mocks/movies/movies_mock.dart';
-import '../../models/movies_model.dart';
-import '../../style/app_colors.dart';
-import '../details/movies/movies_details_screen.dart';
 
-class MoviesHomeScreen extends StatefulWidget {
-  const MoviesHomeScreen({super.key});
+import '../../../components/list_content/movies/movies_list_card_widget.dart';
+import '../../../controllers/movie_controller.dart';
+import '../../../style/app_colors.dart';
+import '../../details/movies/movies_details_screen.dart';
+
+class MoviesGenderScreen extends StatefulWidget {
+  Gender gender;
+
+  MoviesGenderScreen({super.key, required this.gender});
 
   @override
-  State<StatefulWidget> createState() => _MoviesHomeScreenState();
+  State<MoviesGenderScreen> createState() => _MoviesGenderScreenState();
 }
 
-class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
-  final mockMoviesList = MoviesMock().mockMoviesList;
-
+class _MoviesGenderScreenState extends State<MoviesGenderScreen> {
   @override
   void initState() {
     super.initState();
@@ -35,6 +33,7 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
         MaterialPageRoute(
             builder: (context) => MoviesDetailsScreen(movies: movie,)));
   }
+
 
   @override
   Widget build(BuildContext context) {

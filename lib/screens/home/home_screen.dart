@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 3,
       animationDuration: Durations.medium2,
       child: Scaffold(
-          backgroundColor: const Color.fromRGBO(9, 8, 8, 1),
           appBar: AppBar(
             backgroundColor: AppColors().mainPurple,
             title: const AppTitleWidget(),

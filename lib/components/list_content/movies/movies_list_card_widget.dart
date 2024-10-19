@@ -1,62 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iptv_mobile/models/movies_model.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 
 class MoviesListCardWidget extends StatelessWidget {
-  final String moviePhotoUrl;
-  final String movieTitle;
-  //Mudar para lista de genders e tratar para adicionar "," depois de cada gender
-  final String genderName;
+  Movies movies;
 
-  const MoviesListCardWidget(
-      {super.key,
-      required this.moviePhotoUrl,
-      required this.movieTitle,
-      required this.genderName});
+  MoviesListCardWidget({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-            height: 200,
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    border: Border.all(color: AppColors().mainPurple)),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  child: Image.network(
-                    moviePhotoUrl,
-                    fit: BoxFit.cover,
-                    width: 300,
-                  ),
-                ))),
-        Align(
-            alignment: Alignment.centerLeft,
-            child: SizedBox(
-              height: 19,
-              child: Text(
-                movieTitle,
-                style: GoogleFonts.jost(
-                    textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600)),
-              ),
-            )),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            genderName,
-            style: GoogleFonts.jost(
-                textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal)),
+    return SizedBox(
+      width: 120,
+      height: 180,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.network(
+              movies.photoUrl,
+              width: 180,
+              height: 180,
+              fit: BoxFit.cover,
+            ),
           ),
-        )
-      ],
+          const SizedBox(
+            height: 6,
+          ),
+          Text(
+            movies.title,
+            style: const TextStyle(
+                overflow: TextOverflow.ellipsis, fontWeight: FontWeight.bold),
+          ),
+          Text(movies.genders[0].name)
+        ],
+      ),
     );
   }
 }

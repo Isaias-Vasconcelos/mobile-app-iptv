@@ -61,19 +61,10 @@ class _ListMoviesScreenState extends State<ListMoviesScreen> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MoviesDetailsScreen(
-                                    moviePhotoUrl: mockMoviesList[index].photoUrl,
-                                    movieTitle: mockMoviesList[index].title,
-                                    year: mockMoviesList[index].year,
-                                    platformName: mockMoviesList[index].platform.name,
-                                    genderName: mockMoviesList[index].genders[0].name,
-                                    movieDescription: mockMoviesList[index].description,
-                                    movieUrl: mockMoviesList[index].movieUrl)));
+                                builder: (context) => MoviesDetailsScreen(movies: mockMoviesList[index])));
                       },
                       child: MoviesListCardWidget(
-                        moviePhotoUrl: mockMoviesList[index].photoUrl,
-                        movieTitle: mockMoviesList[index].title,
-                        genderName: mockMoviesList[index].genders[0].name,
+                        movies: mockMoviesList[index],
                       ),
                     );
                   }),
