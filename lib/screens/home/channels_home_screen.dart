@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/mocks/genders/genders_mock.dart';
-
 class ChannelsHomeScreen extends StatefulWidget {
   const ChannelsHomeScreen({super.key});
 
@@ -9,7 +7,6 @@ class ChannelsHomeScreen extends StatefulWidget {
 }
 
 class _ChannelsHomeScreenState extends State<ChannelsHomeScreen> {
-  final mockGendersList = GendersMock().mockGendersList;
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iptv_mobile/screens/details/movies/movies_details_screen.dart';
 import 'package:iptv_mobile/screens/home/home_screen.dart';
 import 'package:iptv_mobile/screens/intro/introduction_screen.dart';
-import 'package:iptv_mobile/screens/list_content/list_movies_screen.dart';
-import 'package:iptv_mobile/screens/list_content/list_series_screen.dart';
 import 'package:iptv_mobile/screens/login/login_screen.dart';
 
 class Root extends StatelessWidget {
@@ -25,8 +22,6 @@ class Root extends StatelessWidget {
         "/": (context) => const IntroductionScreen(),
         "/login": (context) => const LoginScreen(),
         "/home": (context) => const HomeScreen(),
-        "/list-movies": (context) => const ListMoviesScreen(),
-        "/list-series": (context) => const ListSeriesScreen(),
       },
     );
   }

@@ -8,25 +8,21 @@ class LoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonGradientContainer(
-        buttonChild: TextButton(
-            onPressed: onPressed,
-            style: const ButtonStyle(
-                fixedSize: WidgetStatePropertyAll(Size(260, 50))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Icon(Icons.login),
-                const SizedBox(
-                  width: 60,
-                ),
-                Text(
-                  "LOGIN",
-                  style: GoogleFonts.jost(
-                      fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-              ],
-            )));
+    return Container(
+      width: double.infinity,
+      height: 50,
+      child: ButtonGradientContainer(
+          buttonChild: TextButton(
+        onPressed: onPressed,
+        child: const Text(
+          'Entrar',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
+        ),
+      )),
+    );
   }
 }
 

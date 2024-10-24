@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv_mobile/models/movies_model.dart';
-import 'package:iptv_mobile/style/app_colors.dart';
 
 class MoviesListCardWidget extends StatelessWidget {
   Movies movies;

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:iptv_mobile/controllers/series_controller.dart';
 import 'package:iptv_mobile/models/gender_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../../components/list_content/movies/movies_list_card_widget.dart';
-import '../../../controllers/movie_controller.dart';
+import '../../../components/list_content/series/series_list_card_widget.dart';
+import '../../../models/series_model.dart';
 import '../../../style/app_colors.dart';
+import '../../details/series/series_details_screen.dart';
 
 class SeriesGenderScreen extends StatefulWidget {
   Gender gender;
@@ -20,9 +21,17 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
   void initState() {
     super.initState();
 
-    final movieController =
-        Provider.of<MovieController>(context, listen: false);
-    movieController.loadMovies();
+    final seriesController =
+        Provider.of<SeriesController>(context, listen: false);
+    seriesController.loadSeries();
+  }
+
+
+  void verDetalhesSeries(Series series){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SeriesDetailsScreen(series: series,)));
   }
 
   @override
@@ -47,7 +56,7 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
             height: 15,
           ),
           Expanded(
-            child: Consumer<MovieController>(
+            child: Consumer<SeriesController>(
               builder: (context, controller, child) {
                 if (controller.isLoading) {
                   return const Center(
@@ -62,11 +71,14 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 8.0,
                   ),
-                  itemCount: controller.movies.length,
+                  itemCount: controller.series.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      child: MoviesListCardWidget(
-                        movies: controller.movies[index],
+                      onTap: () {
+                        verDetalhesSeries(controller.series[index]);
+                      },
+                      child: SeriesListCardWidget(
+                        series: controller.series[index],
                       ),
                     );
                   },

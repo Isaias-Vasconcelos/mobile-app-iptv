@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../components/back_button_sliver_widget.dart';
 import '../../components/list_content/input_text_list_content_widget.dart';
 import '../../components/list_content/movies/movies_list_card_widget.dart';
-import '../../mocks/movies/movies_mock.dart';
 import '../../models/movies_model.dart';
 import '../../style/app_colors.dart';
 import '../details/movies/movies_details_screen.dart';
@@ -18,8 +17,6 @@ class MoviesHomeScreen extends StatefulWidget {
 }
 
 class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
-  final mockMoviesList = MoviesMock().mockMoviesList;
-
   @override
   void initState() {
     super.initState();

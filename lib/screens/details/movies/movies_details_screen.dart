@@ -3,7 +3,6 @@ import 'package:iptv_mobile/components/details/card_image_widget.dart';
 import 'package:iptv_mobile/components/details/movies/play_button_widget.dart';
 import 'package:iptv_mobile/components/list_content/movies/movies_list_card_widget.dart';
 import 'package:iptv_mobile/controllers/movie_controller.dart';
-import 'package:iptv_mobile/mocks/movies/movies_mock.dart';
 import 'package:iptv_mobile/models/movies_model.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ class MoviesDetailsScreen extends StatefulWidget {
 }
 
 class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
-  final mockSimilarMovies = MoviesMock().mockMoviesList;
 
   @override
   void initState() {
