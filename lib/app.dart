@@ -5,6 +5,7 @@ import 'package:iptv_mobile/screens/intro/introduction_screen.dart';
 import 'package:iptv_mobile/screens/list_content/list_movies_screen.dart';
 import 'package:iptv_mobile/screens/list_content/list_series_screen.dart';
 import 'package:iptv_mobile/screens/login/login_screen.dart';
+import 'package:iptv_mobile/screens/player/player_screen.dart';
 
 class Root extends StatelessWidget {
   const Root({super.key});
@@ -20,13 +21,14 @@ class Root extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         useMaterial3: true,
       ),
-      initialRoute: "/",
+      initialRoute: "/player",
       routes: {
         "/": (context) => const IntroductionScreen(),
         "/login": (context) => const LoginScreen(),
         "/home": (context) => const HomeScreen(),
         "/list-movies": (context) => const ListMoviesScreen(),
         "/list-series": (context) => const ListSeriesScreen(),
+        "/player": (context) => const PlayerScreen(),
       },
     );
   }
