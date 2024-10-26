@@ -43,33 +43,55 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
     final colors = AppColors();
 
     return Drawer(
-        width: 260,
-        child: Consumer<GenderController>(
-          builder: (context, controller, child) {
-            if (controller.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+      width: 260,
+      child: Column(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: colors.mainPurple,
+            ),
+            child: Center(
+              child: Text(
+                'Gêneros',
+                style: GoogleFonts.roboto(
+                  color: textAndIconsColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Consumer<GenderController>(
+              builder: (context, controller, child) {
+                if (controller.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return ListTile(
-                  titleTextStyle:
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      titleTextStyle:
                       const TextStyle(color: Colors.white, fontSize: 17),
-                  leading: Icon(
-                    Icons.play_circle_outline_sharp,
-                    color: colors.mainPurple,
-                  ),
-                  title: Text(controller.genders[index].name),
-                  onTap: () {
-                    redirecionarPagina(controller.genders[index]);
+                      leading: Icon(
+                        Icons.play_circle_outline_sharp,
+                        color: colors.mainPurple,
+                      ),
+                      title: Text(controller.genders[index].name),
+                      onTap: () {
+                        redirecionarPagina(controller.genders[index]);
+                      },
+                    );
                   },
+                  itemCount: controller.genders.length,
                 );
               },
-              itemCount: controller.genders.length,
-            );
-          },
-        ));
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -70,6 +70,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: SizedBox(
                   child: Column(
                     children: [
+                      RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "ALPHA ",
+                                style: GoogleFonts.jost(
+                                    textStyle: TextStyle(
+                                        fontSize: 48,
+                                        fontWeight: FontWeight.w800,
+                                        color: AppColors().mainPurple))),
+                            TextSpan(
+                                text: "TV",
+                                style: GoogleFonts.jost(
+                                    textStyle: const TextStyle(
+                                        fontSize: 48, fontWeight: FontWeight.w800))),
+                          ])),
+                      Text("Aproveite seus Filmes e Series favoritos",
+                          style: GoogleFonts.jost(
+                              textStyle: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w600))),
+                      const SizedBox(height: 70,),
                       TextFormField(
                         validator: (value) => _userCodeValidator(value),
                         keyboardType: TextInputType.number,
