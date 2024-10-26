@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../components/details/card_image_widget.dart';
 import '../../../style/app_colors.dart';
+import '../../player/player_screen.dart';
 
 class SeriesDetailsScreen extends StatefulWidget {
   Series series;
@@ -25,6 +26,18 @@ class _SeriesDetailsScreenState extends State<SeriesDetailsScreen> {
     String? seasonId = widget.series.seasons[0].id;
 
     episodieController.loadEpisodies(seasonId);
+  }
+
+  void playSeries(String contentName, String urlContent) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => PlayerScreen(
+                contentName: contentName,
+                urlContent:
+                    'https://iptv-content-bucket.s3.us-east-1.amazonaws.com/movies/movies-content/Homem+Aranha+de+Volta+ao+Lar.mp4',
+              )),
+    );
   }
 
   String? selectedValue;
@@ -148,6 +161,12 @@ class _SeriesDetailsScreenState extends State<SeriesDetailsScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        onTap: () {
+                          playSeries(
+                            controller.episodies[index].title,
+                            controller.episodies[index].episodieUrl,
+                          );
+                        },
                       );
                     },
                   );

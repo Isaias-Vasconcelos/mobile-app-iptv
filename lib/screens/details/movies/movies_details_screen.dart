@@ -4,6 +4,7 @@ import 'package:iptv_mobile/components/details/movies/play_button_widget.dart';
 import 'package:iptv_mobile/components/list_content/movies/movies_list_card_widget.dart';
 import 'package:iptv_mobile/controllers/movie_controller.dart';
 import 'package:iptv_mobile/models/movies_model.dart';
+import 'package:iptv_mobile/screens/player/player_screen.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,6 @@ class MoviesDetailsScreen extends StatefulWidget {
 }
 
 class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -34,6 +34,18 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
             builder: (context) => MoviesDetailsScreen(
                   movies: movie,
                 )));
+  }
+
+  void playMovie(String contentName, String urlContent) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => PlayerScreen(
+                contentName: contentName,
+                urlContent:
+                    'https://iptv-content-bucket.s3.us-east-1.amazonaws.com/movies/movies-content/Homem+Aranha+de+Volta+ao+Lar.mp4',
+              )),
+    );
   }
 
   @override
@@ -72,7 +84,12 @@ class _MoviesDetailsScreenState extends State<MoviesDetailsScreen> {
               const SizedBox(
                 height: 20,
               ),
-              PlayButtonWidget(onPressed: () {}),
+              PlayButtonWidget(onPressed: () {
+                playMovie(
+                  widget.movies.title,
+                  widget.movies.movieUrl,
+                );
+              }),
               const SizedBox(
                 height: 20,
               ),
