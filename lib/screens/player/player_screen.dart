@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv_mobile/components/player/speed_button_widget.dart';
+import 'package:iptv_mobile/components/player/speed_options_widget.dart';
+import 'package:iptv_mobile/controllers/player_controller.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
+  PlayerController playerController = PlayerController.instance;
   late VlcPlayerController _vlcPlayerController;
   late Timer _timer;
   late Timer? _showOptionsTimer;
@@ -24,7 +27,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   bool _isPlaying = true;
   bool _optionsIsVisible = false;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   String contentName = "Homem aranha: De volta ao lar";
 
@@ -66,11 +69,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void initState() {
     super.initState();
 
-    //Força a tela ficar na horizontal
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft]);
 
-    //Desativa a visualização da barra de notificações do celular
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     _vlcPlayerController = VlcPlayerController.network(
@@ -85,8 +86,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
             ]),
             video: VlcVideoOptions([
               VlcVideoOptions.dropLateFrames(true),
-            ])))
-      ..initialize();
+            ])));
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       final position = await _vlcPlayerController.getPosition();
@@ -98,8 +98,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
     });
 
     _vlcPlayerController.addListener(() {
+      print(playerController.speedPlayBack.value);
+    });
+
+    playerController.speedPlayBack.addListener(() {
       setState(() {
-        _isLoading = _vlcPlayerController.value.isBuffering;
+        _vlcPlayerController
+            .setPlaybackSpeed(playerController.speedPlayBack.value);
       });
     });
   }
@@ -188,54 +193,58 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
               ),
             if (_optionsIsVisible)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width - 80,
-                            height: 20,
-                            child: Slider(
-                                activeColor: AppColors().mainPurple,
-                                thumbColor: Colors.white,
-                                value:
-                                    _currentPosition.inMilliseconds.toDouble(),
-                                min: 0,
-                                max: _totalDuration.inMilliseconds.toDouble(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _currentPosition =
-                                        Duration(milliseconds: value.toInt());
-                                  });
-                                  _vlcPlayerController.seekTo(_currentPosition);
-                                }),
-                          ),
-                          Text(
-                            formatDuration(_totalDuration - _currentPosition),
-                            style: const TextStyle(fontSize: 15),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SpeedButtonWidget(onTap: () {
-                            print("clicou no botao de velocidade");
-                          })
-                        ],
-                      )
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 80,
+                          height: 20,
+                          child: Slider(
+                              activeColor: AppColors().mainPurple,
+                              thumbColor: Colors.white,
+                              value: _currentPosition.inMilliseconds.toDouble(),
+                              min: 0,
+                              max: _totalDuration.inMilliseconds.toDouble(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _currentPosition =
+                                      Duration(milliseconds: value.toInt());
+                                });
+                                _vlcPlayerController.seekTo(_currentPosition);
+                              }),
+                        ),
+                        Text(
+                          formatDuration(_totalDuration - _currentPosition),
+                          style: const TextStyle(fontSize: 15),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SpeedButtonWidget(onTap: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.black,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const SizedBox(
+                                    height: 300,
+                                    width: 300,
+                                    child: SpeedOptionsWidget());
+                              });
+                        })
+                      ],
+                    )
+                  ],
                 ),
-              )
+              ),
           ],
         ),
       ),
