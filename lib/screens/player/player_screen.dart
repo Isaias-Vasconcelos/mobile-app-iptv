@@ -9,11 +9,11 @@ import 'package:iptv_mobile/controllers/player_controller.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
 
 class PlayerScreen extends StatefulWidget {
+  final String contentName;
+  final String urlContent;
 
-  String contentName;
-  String urlContent;
-
-  PlayerScreen({super.key, required this.contentName, required this.urlContent});
+  const PlayerScreen(
+      {super.key, required this.contentName, required this.urlContent});
 
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
@@ -75,8 +75,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    _vlcPlayerController = VlcPlayerController.network(
-        widget.urlContent,
+    _vlcPlayerController = VlcPlayerController.network(widget.urlContent,
         hwAcc: HwAcc.auto,
         options: VlcPlayerOptions(
             advanced: VlcAdvancedOptions([
@@ -98,10 +97,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
       });
     });
 
-    _vlcPlayerController.addListener(() {
-      print(playerController.speedPlayBack.value);
-    });
-
     playerController.speedPlayBack.addListener(() {
       setState(() {
         _vlcPlayerController
@@ -118,11 +113,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
     _vlcPlayerController.stopRendererScanning();
     _vlcPlayerController.dispose();
 
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+    //Talvez funcione
+    playerController.speedPlayBack.removeListener(() {});
 
     super.dispose();
   }
@@ -187,22 +184,59 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
               if (_optionsIsVisible && !_isLoading)
                 Center(
-                  child: IconButton(
-                    icon: Icon(
-                      _isPlaying ? Icons.pause : Icons.play_arrow,
-                      color: Colors.white,
-                      size: 70,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPlaying = !_isPlaying;
-                        if (_isPlaying) {
-                          _vlcPlayerController.play();
-                        } else {
-                          _vlcPlayerController.pause();
-                        }
-                      });
-                    },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentPosition += const Duration(seconds: -10);
+                            });
+                            _vlcPlayerController.seekTo(_currentPosition);
+                          },
+                          icon: const Icon(
+                            Icons.replay_10,
+                            color: Colors.white,
+                            size: 50,
+                          )),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Center(
+                        child: IconButton(
+                          icon: Icon(
+                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: Colors.white,
+                            size: 70,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPlaying = !_isPlaying;
+                              if (_isPlaying) {
+                                _vlcPlayerController.play();
+                              } else {
+                                _vlcPlayerController.pause();
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _currentPosition += const Duration(seconds: 10);
+                            });
+                            _vlcPlayerController.seekTo(_currentPosition);
+                          },
+                          icon: const Icon(
+                            Icons.forward_10_outlined,
+                            color: Colors.white,
+                            size: 50,
+                          ))
+                    ],
                   ),
                 ),
               if (_optionsIsVisible)
@@ -219,8 +253,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             child: Slider(
                               activeColor: AppColors().mainPurple,
                               thumbColor: Colors.white,
-                              value:
-                              _currentPosition.inMilliseconds.toDouble(),
+                              value: _currentPosition.inMilliseconds.toDouble(),
                               min: 0,
                               max: _totalDuration.inMilliseconds.toDouble(),
                               onChanged: (value) {
