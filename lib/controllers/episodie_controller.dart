@@ -23,5 +23,6 @@ class EpisodieController extends ChangeNotifier {
         .where((el) => el.seasonId == seasonId).toList();
 
     _isLoading = false;
+    notifyListeners();
   }
 }

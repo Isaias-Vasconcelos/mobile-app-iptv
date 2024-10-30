@@ -23,7 +23,7 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
 
     final seriesController =
         Provider.of<SeriesController>(context, listen: false);
-    seriesController.loadSeries();
+    seriesController.loadSeriesByGender(widget.gender);
   }
 
 
@@ -36,6 +36,7 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final seriesController = Provider.of<SeriesController>(context,listen: true);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
@@ -44,6 +45,13 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
         children: [
           const SizedBox(height: 30),
           TextField(
+            onChanged: (value) {
+              if(value.isEmpty){
+                seriesController.loadSeriesByGender(widget.gender);
+              } else {
+                seriesController.loadSeriesByGenderSearch(widget.gender, value);
+              }
+            },
             style: TextStyle(color: AppColors().mainPurple),
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
@@ -61,6 +69,24 @@ class _SeriesGenderScreenState extends State<SeriesGenderScreen> {
                 if (controller.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (controller.series.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline_rounded),
+                            SizedBox(width: 8), // Espaço entre o ícone e o texto
+                            Text('Nenhuma série correspondente!'),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 }
 

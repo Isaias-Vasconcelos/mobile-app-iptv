@@ -24,7 +24,7 @@ class _MoviesGenderScreenState extends State<MoviesGenderScreen> {
 
     final movieController =
         Provider.of<MovieController>(context, listen: false);
-    movieController.loadMovies();
+    movieController.loadMoviesByGender(widget.gender);
   }
 
   void verDetalhesFilme(Movies movie){
@@ -37,6 +37,7 @@ class _MoviesGenderScreenState extends State<MoviesGenderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final movieController = Provider.of<MovieController>(context,listen: true);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
@@ -45,6 +46,13 @@ class _MoviesGenderScreenState extends State<MoviesGenderScreen> {
         children: [
           const SizedBox(height: 30),
           TextField(
+            onChanged: (value) {
+              if(value.isEmpty){
+                movieController.loadMoviesByGender(widget.gender);
+              } else {
+                movieController.loadMoviesByGenderSearch(widget.gender, value);
+              }
+            },
             style: TextStyle(color: AppColors().mainPurple),
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
@@ -62,6 +70,24 @@ class _MoviesGenderScreenState extends State<MoviesGenderScreen> {
                 if (controller.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (controller.movies.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline_rounded),
+                            SizedBox(width: 8), // Espaço entre o ícone e o texto
+                            Text('Nenhum filme correspondente!'),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 }
 

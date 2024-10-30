@@ -6,7 +6,6 @@ import 'package:iptv_mobile/screens/details/series/series_details_screen.dart';
 import 'package:provider/provider.dart';
 import '../../style/app_colors.dart';
 
-
 class SeriesHomeScreen extends StatefulWidget {
   const SeriesHomeScreen({super.key});
 
@@ -15,25 +14,28 @@ class SeriesHomeScreen extends StatefulWidget {
 }
 
 class _SeriesHomeScreenState extends State<SeriesHomeScreen> {
-
   @override
   void initState() {
     super.initState();
 
     final seriesController =
-    Provider.of<SeriesController>(context, listen: false);
+        Provider.of<SeriesController>(context, listen: false);
     seriesController.loadSeries();
   }
 
-  void verDetalhesSeries(Series series){
+  void verDetalhesSeries(Series series) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => SeriesDetailsScreen(series: series,)));
+            builder: (context) => SeriesDetailsScreen(
+                  series: series,
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
+    final seriesController =
+        Provider.of<SeriesController>(context, listen: true);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
@@ -42,6 +44,13 @@ class _SeriesHomeScreenState extends State<SeriesHomeScreen> {
         children: [
           const SizedBox(height: 30),
           TextField(
+            onChanged: (value) {
+              if (value.isEmpty) {
+                seriesController.loadSeries();
+              } else {
+                seriesController.loadSeriesBySearch(value);
+              }
+            },
             style: TextStyle(color: AppColors().mainPurple),
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
@@ -59,6 +68,24 @@ class _SeriesHomeScreenState extends State<SeriesHomeScreen> {
                 if (controller.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (controller.series.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline_rounded),
+                            SizedBox(width: 8), // Espaço entre o ícone e o texto
+                            Text('Nenhuma série correspondente!'),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 }
 

@@ -26,15 +26,19 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
     movieController.loadMovies();
   }
 
-  void verDetalhesFilme(Movies movie){
+  void verDetalhesFilme(Movies movie) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MoviesDetailsScreen(movies: movie,)));
+            builder: (context) => MoviesDetailsScreen(
+                  movies: movie,
+                )));
   }
 
   @override
   Widget build(BuildContext context) {
+    final movieController = Provider.of<MovieController>(context,listen: true);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
@@ -43,6 +47,13 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
         children: [
           const SizedBox(height: 30),
           TextField(
+            onChanged: (value) {
+              if (value.isEmpty) {
+                movieController.loadMovies();
+              } else {
+                movieController.loadMoviesByTerm(value);
+              }
+            },
             style: TextStyle(color: AppColors().mainPurple),
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
@@ -60,6 +71,24 @@ class _MoviesHomeScreenState extends State<MoviesHomeScreen> {
                 if (controller.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (controller.movies.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline_rounded),
+                            SizedBox(width: 8), // Espaço entre o ícone e o texto
+                            Text('Nenhum filme correspondente!'),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 }
 
