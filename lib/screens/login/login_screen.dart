@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv_mobile/components/login/login_button_widget.dart';
+import 'package:iptv_mobile/controllers/user_controller.dart';
 import 'package:iptv_mobile/style/app_colors.dart';
-import 'package:iptv_mobile/style/login/decorations/text_form_field_decoration.dart';
-import 'package:iptv_mobile/style/login/text_above_input_style.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,12 +13,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  late String userCode;
+  late String password;
+  final controller = UserController.instance;
 
   String? _userCodeValidator(String? value) {
     if (value!.isEmpty) return "Informe o seu Código de Usuário";
     if (value.length < 8) {
       return "Deve conter pelo menos 8 dígitos";
     }
+
+    userCode = value;
     return null;
   }
 
@@ -28,21 +32,27 @@ class _LoginScreenState extends State<LoginScreen> {
     if (value.length < 8) {
       return "Deve conter pelo menos 8 dígitos";
     }
+
+    password = value;
     return null;
   }
 
-  _login() {
+  _login() async {
     if (_formKey.currentState!.validate()) {
       //Adicionar lógica de login
+      var loginRespone = await controller.auth(userCode, password);
 
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'Login realizado com sucesso!',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-      ));
-      Navigator.of(context).pushReplacementNamed("/home");
+      if (loginRespone) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'Login realizado com sucesso!',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+        ));
+
+        Navigator.of(context).pushReplacementNamed("/home");
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
@@ -72,24 +82,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       RichText(
                           text: TextSpan(children: [
-                            TextSpan(
-                                text: "ALPHA ",
-                                style: GoogleFonts.jost(
-                                    textStyle: TextStyle(
-                                        fontSize: 48,
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors().mainPurple))),
-                            TextSpan(
-                                text: "TV",
-                                style: GoogleFonts.jost(
-                                    textStyle: const TextStyle(
-                                        fontSize: 48, fontWeight: FontWeight.w800))),
-                          ])),
+                        TextSpan(
+                            text: "ALPHA ",
+                            style: GoogleFonts.jost(
+                                textStyle: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors().mainPurple))),
+                        TextSpan(
+                            text: "TV",
+                            style: GoogleFonts.jost(
+                                textStyle: const TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.w800))),
+                      ])),
                       Text("Aproveite seus Filmes e Series favoritos",
                           style: GoogleFonts.jost(
                               textStyle: const TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.w600))),
-                      const SizedBox(height: 70,),
+                      const SizedBox(
+                        height: 70,
+                      ),
                       TextFormField(
                         validator: (value) => _userCodeValidator(value),
                         keyboardType: TextInputType.number,
